@@ -25,11 +25,8 @@ class Xulrunner < Formula
 
   stable do
     # Always use direct URLs (releases/<version>/) instead of releases/latest/
-    url "https://ftp.mozilla.org/pub/mozilla.org/xulrunner/releases/33.0/source/xulrunner-33.0.source.tar.bz2"
-    sha1 "0fbd6ac263d9c5811a5338252b28e3d08ddfbeb2"
-
-    # https://github.com/Homebrew/homebrew/issues/33558
-    depends_on MaximumMacOSRequirement => :mavericks
+    url "https://ftp.mozilla.org/pub/mozilla.org/xulrunner/releases/39.0/source/xulrunner-39.0.source.tar.bz2"
+    sha1 "c3e5069b13f3ef19dc01b12e032064929db953ef"
   end
 
   bottle do
@@ -89,9 +86,6 @@ class Xulrunner < Formula
       ac_add_options --with-nss-prefix=#{Formula["nss"].opt_prefix}
       ac_add_options --with-nspr-prefix=#{Formula["nspr"].opt_prefix}
     EOS
-    # fixed usage of bsdtar with unsupported parameters (replaced with gnu-tar)
-    inreplace "toolkit/mozapps/installer/packager.mk", "$(TAR) -c --owner=0 --group=0 --numeric-owner",
-              "#{Formula["gnu-tar"].opt_bin}/gtar -c --owner=0 --group=0 --numeric-owner"
 
     system "make", "-f", "client.mk", "build"
     system "make", "-f", "client.mk", "package"
